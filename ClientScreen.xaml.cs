@@ -96,7 +96,7 @@ namespace TCPChat_Assync
                     {
                         Dispatcher.Invoke(() => //Atualiza a UI
                         {
-                            txtBox_Mensagem.AppendText("Guest: " + mensagem + "\n");
+                            txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
                         });
                     }
 
