@@ -1,3 +1,16 @@
+# Ambiente de Desenvolvimento
+- IDE
+  - Visual Studio (Comunity 2022)
+- Linguagem
+  - C# (.Net 8.0)
+- Interface Gráfica
+  - WPF (Windows Presentation Fundadtion)
+- Gerenciador de tarefas
+  - Task.RUN
+    - Método util para execução de tarefas em segundo plano, que retorna uma "Tarefa" que será consumida pelo operador "Await" dentro de uma método assíncrono, definido pelo marcador "Assync". Dessa forma é possível realizar tarefas paralelas sem congelar a UI.
+    - Await: Serve para esperar a conclusão de uma Tarefa sem travar a interface (UI).
+    - Assync: Palavra reservada utilizada na criação do método (logo após o modificador de acesso) para defini-lo como "assíncrono".
+
 
 # Protótipos
 
