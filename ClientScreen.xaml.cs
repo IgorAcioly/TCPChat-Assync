@@ -23,7 +23,7 @@ namespace TCPChat_Assync
     public partial class ClientScreen : Window
     {
         private TcpListener listener;
-        private TcpClient client;
+        private TcpClient client = new TcpClient();
         public StreamReader STR;
         public StreamWriter STW;
         public string recieve;
@@ -37,12 +37,10 @@ namespace TCPChat_Assync
 
         private async void btnConectar_Click(object sender, RoutedEventArgs e)
         {
-            client = new TcpClient();
-            IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(txtBox_IPServer.Text), int.Parse(txtBox_PortServer.Text));
-
             try
             {
-                txtBox_StatusMensagem.AppendText("Conectado ao servidor\n");
+                IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(txtBox_IPServer.Text), int.Parse(txtBox_PortServer.Text));
+                txtBox_StatusMensagem.AppendText("Conectado ao servidor" + "\n");
 
                 await client.ConnectAsync(IpEnd.Address, IpEnd.Port);
 
@@ -56,7 +54,7 @@ namespace TCPChat_Assync
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
+                MessageBox.Show("Nenhum servidor encontrado com IP e Porta especificados");
             }
         }
 
@@ -64,17 +62,25 @@ namespace TCPChat_Assync
         {
             try
             {
-                cts?.Cancel();
+                if (client == null || !client.Connected)
+                {
+                    MessageBox.Show("Seu cliente não está conectado.");
+                    return;
+                }
+                else
+                {
+                    cts?.Cancel();
 
-                STR?.Close();
-                STW?.Close();
-                client?.Close();
+                    STR?.Close();
+                    STW?.Close();
+                    client?.Close();
 
-                txtBox_StatusMensagem.AppendText("Desconectado do servidor.\n");
+                    txtBox_StatusMensagem.AppendText("Desconectado do servidor." + "\n");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro ao desconectar" + ex.Message);
+                MessageBox.Show("Erro ao desconectar." + ex.Message);
             }
         }
 
@@ -100,11 +106,43 @@ namespace TCPChat_Assync
             {
                 Dispatcher.Invoke(() =>
                 {
-                    txtBox_Mensagem.AppendText("Erro ao receber mensagem!" + ex.Message);
+                    txtBox_Mensagem.AppendText("Erro ao receber mensagem." + ex.Message);
                 });
             }
 
             }
 
+        private void btnEnviar_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(txtBox_Mensagem.Text))
+            {
+                MessageBox.Show("Preencha o campo de mensagem.");
+                return;
+            }
+            if (client == null || !client.Connected)
+            {
+                MessageBox.Show("Seu cliente não está conectado.");
+                return;
+            }
+
+            try
+                {
+
+                    TextToSend = txtBox_Mensagem.Text;
+                    STW.WriteLine(TextToSend);
+                    txtBox_StatusMensagem.AppendText("Host:" + TextToSend + "\n");
+                    txtBox_Mensagem.Clear();
+                }
+                catch (NullReferenceException ex)
+                {
+                    MessageBox.Show("Cliente não conectado." + ex.Message);
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao enviar mensagem."+"\n" + ex.Message);
+                }
+            } 
     }
 }
