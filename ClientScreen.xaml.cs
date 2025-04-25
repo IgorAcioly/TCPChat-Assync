@@ -22,7 +22,6 @@ namespace TCPChat_Assync
 
     public partial class ClientScreen : Window
     {
-        private TcpListener listener;
         private TcpClient client = new TcpClient();
         public StreamReader STR;
         public StreamWriter STW;
@@ -52,9 +51,9 @@ namespace TCPChat_Assync
                 _ = Task.Run(() => ReceberMensagensAsync(cts.Token));
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Nenhum servidor encontrado com IP e Porta especificados");
+                MessageBox.Show("Não foi possível conectar-se." + "\n"+"Nenhum servidor encontrado com o endereço especificado");
             }
         }
 
@@ -110,7 +109,7 @@ namespace TCPChat_Assync
                 });
             }
 
-            }
+        }
 
         private void btnEnviar_Click(object sender, RoutedEventArgs e)
         {
