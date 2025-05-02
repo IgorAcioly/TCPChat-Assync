@@ -37,21 +37,32 @@ namespace TCPChat_Assync
         {
             try
             {
-                listener = new TcpListener(IPAddress.Any, int.Parse(txtBox_PortServer.Text));
-                listener.Start();
-                client = await listener.AcceptTcpClientAsync();
+                if (listener == null)
+                {
+                    int porta = int.Parse(txtBox_PortServer.Text);
+                    listener = new TcpListener(IPAddress.Any, porta);
+                    // Garante que a porta possa ser reutilizada após uma desconexão
+                    listener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                    listener.Start();
 
-                txtBox_StatusMensagem.AppendText("Servidor aguardando conexão com cliente.\n");
+                    txtBox_StatusMensagem.AppendText("Servidor aguardando conexão com cliente.\n");
+                    client = await listener.AcceptTcpClientAsync();
 
-                STR = new StreamReader(client.GetStream());
-                STW = new StreamWriter(client.GetStream());
-                STW.AutoFlush = true;
+                    STR = new StreamReader(client.GetStream());
+                    STW = new StreamWriter(client.GetStream());
+                    STW.AutoFlush = true;
+                    cts = new CancellationTokenSource();
+                    _ = Task.Run(() => ReceberMensagensAsync(cts.Token));
 
-                cts = new CancellationTokenSource();
-                _ = Task.Run(() => ReceberMensagensAsync(cts.Token));
+                    txtBox_StatusMensagem.AppendText("Servidor iniciado e cliente conectado.\n");
 
-                txtBox_StatusMensagem.AppendText("Servidor iniciado e cliente conectado.\n");
+                }
+                else
+                {
+                    txtBox_StatusMensagem.AppendText("TESTE.\n");
+                }
             }
+
             catch (SocketException)
             {
                 MessageBox.Show("A porta selecionada já está em uso.");
@@ -62,22 +73,30 @@ namespace TCPChat_Assync
             }
         }
 
-        private void btnDesconectar_Click(object sender, RoutedEventArgs e)
+        private async void btnDesconectar_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (client != null && client.Connected)
+                if (client != null || listener != null)
                 {
-                    STR.Close();
-                    STW.Close();
-                    client.Close();
+                    cts?.Cancel();
+                    STR?.Close();
+                    STW?.Close();
+                    client?.Close();
+                    client = null;
 
                     txtBox_StatusMensagem.AppendText("Cliente desconectado.\n");
-                }
-                if (listener != null)
-                {
-                    listener.Stop();
+
+                    listener?.Stop();
+                    listener = null;
                     txtBox_StatusMensagem.AppendText("Servidor parado.\n");
+
+                    await Task.Delay(500); // Garante liberação da porta
+                }
+                else 
+                {
+                    MessageBox.Show("Não há conexões estabelecidas.\n");
+
                 }
             }
             catch (Exception)

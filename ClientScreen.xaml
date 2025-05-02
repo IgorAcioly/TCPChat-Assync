@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCPChat_Assync"
         mc:Ignorable="d"
-        Title="Windo1" Height="450" Width="800">
+        Title="Client Screen" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="151*"/>
+            <ColumnDefinition Width="45*"/>
+            <ColumnDefinition Width="472*"/>
+            <ColumnDefinition Width="283*"/>
         </Grid.ColumnDefinitions>
         <Label x:Name="txtIPServer" Content="IP Server" HorizontalAlignment="Left" Margin="31,21,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
         <TextBox x:Name="txtBox_IPServer" HorizontalAlignment="Left" Margin="67,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="28" Grid.Column="1"/>
@@ -17,11 +18,11 @@
         <TextBox x:Name="txtBox_PortServer" HorizontalAlignment="Left" Margin="67,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71" Height="28" Grid.Column="1"/>
         <Label x:Name="txtDigiteMensagem" Content="Digite a mensagem:" HorizontalAlignment="Left" Margin="28,189,0,0" VerticalAlignment="Top" Cursor="" Grid.ColumnSpan="2"/>
         <TextBox x:Name="txtBox_Mensagem" HorizontalAlignment="Left" Margin="103,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" Height="180" Grid.Column="1"/>
-        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="382,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1"/>
+        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="382,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1" Grid.ColumnSpan="2"/>
         <Button x:Name="btnConectar" Content="Conectar" HorizontalAlignment="Left" Margin="6,108,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="btnConectar_Click" Grid.Column="1"/>
         <Button x:Name="btnDesconectar" Content="Desconectar" HorizontalAlignment="Left" Margin="92,108,0,0" VerticalAlignment="Top" Height="32" Width="70" Click="btnDesconectar_Click" Grid.Column="1"/>
         <ScrollBar HorizontalAlignment="Left" Margin="335,202,0,0" VerticalAlignment="Top" Height="145" Width="10" Grid.Column="1"/>
-        <ScrollBar HorizontalAlignment="Left" Margin="725,101,0,0" VerticalAlignment="Top" Height="307" Width="10" Grid.Column="1"/>
+        <ScrollBar HorizontalAlignment="Left" Margin="253,101,0,0" VerticalAlignment="Top" Height="307" Width="10" Grid.Column="2"/>
         <Button x:Name="btnEnviar" Content="Enviar" HorizontalAlignment="Left" Margin="283,366,0,0" VerticalAlignment="Top" Height="28" Width="52" Click="btnEnviar_Click" Grid.Column="1"/>
 
     </Grid>

@@ -5,16 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCPChat_Assync"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Login Screen" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnEntrar" Content="Entrar" HorizontalAlignment="Left" Margin="409,268,0,0" VerticalAlignment="Top" Height="31" Width="90"/>
-        <Button x:Name="btnCadastrar" Content="Cadastrar" HorizontalAlignment="Left" Margin="279,268,0,0" VerticalAlignment="Top" Height="31" Width="92"/>
-        <TextBox x:Name="txtBox_Usuario" HorizontalAlignment="Left" Margin="328,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" TextChanged="TextBox_TextChanged" Height="28"/>
-        <TextBox x:Name="txtBox_Senha" HorizontalAlignment="Left" Margin="328,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="26"/>
-        <Label x:Name="txtUsuario" Content="Nome de usuário: &#xD;&#xA; " HorizontalAlignment="Left" Margin="208,140,0,0" VerticalAlignment="Top" Height="28" Width="105"/>
-        <Label x:Name="txtSenha" Content="Senha: " HorizontalAlignment="Left" Margin="236,191,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="txtLogin" Content="LOGIN" HorizontalAlignment="Left" Margin="371,52,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="38" Width="83" FontSize="20"/>
-        <Rectangle HorizontalAlignment="Left" Height="38" Margin="354,52,0,0" Stroke="Black" VerticalAlignment="Top" Width="112"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="127*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="btnEntrar" Content="Entrar" HorizontalAlignment="Left" Margin="244,268,0,0" VerticalAlignment="Top" Height="31" Width="90" Grid.Column="1"/>
+        <Button x:Name="btnCadastrar" Content="Cadastrar" HorizontalAlignment="Left" Margin="114,268,0,0" VerticalAlignment="Top" Height="31" Width="92" Grid.Column="1"/>
+        <TextBox x:Name="txtBox_Usuario" HorizontalAlignment="Left" Margin="163,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" TextChanged="TextBox_TextChanged" Height="28" Grid.Column="1"/>
+        <TextBox x:Name="txtBox_Senha" HorizontalAlignment="Left" Margin="163,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="26" Grid.Column="1"/>
+        <Label x:Name="txtUsuario" Content="Nome de usuário: &#xD;&#xA; " HorizontalAlignment="Left" Margin="43,140,0,0" VerticalAlignment="Top" Height="28" Width="105" Grid.Column="1"/>
+        <Label x:Name="txtSenha" Content="Senha: " HorizontalAlignment="Left" Margin="71,191,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+        <Label x:Name="txtLogin" Content="LOGIN" HorizontalAlignment="Left" Margin="206,52,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="38" Width="83" FontSize="20" Grid.Column="1"/>
+        <Rectangle HorizontalAlignment="Left" Height="38" Margin="189,52,0,0" Stroke="Black" VerticalAlignment="Top" Width="112" Grid.Column="1"/>
 
     </Grid>
 </Window>

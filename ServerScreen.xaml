@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TCPChat_Assync"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="Server Screen" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="57*"/>
+        </Grid.ColumnDefinitions>
         <Label x:Name="txtIPServer" Content="IP Server" HorizontalAlignment="Left" Margin="90,119,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtBox_IPServer" HorizontalAlignment="Left" Margin="171,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="28"/>
         <Label x:Name="txtPortServer" Content="Port Server" HorizontalAlignment="Left" Margin="84,160,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtBox_PortServer" HorizontalAlignment="Left" Margin="171,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71" Height="28"/>
-        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="427,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310"/>
+        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="83,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1"/>
         <Button x:Name="btnConectar" Content="Conectar" HorizontalAlignment="Left" Margin="120,243,0,0" VerticalAlignment="Top" Height="32" Width="63" Click="btnConectar_Click"/>
         <Button x:Name="btnDesconectar" Content="Desconectar" HorizontalAlignment="Left" Margin="206,243,0,0" VerticalAlignment="Top" Height="32" Width="71" Click="btnDesconectar_Click"/>
 
