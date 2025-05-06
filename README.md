@@ -11,6 +11,49 @@
     - Await: Serve para esperar a conclusão de uma Tarefa sem travar a interface (UI).
     - Assync: Palavra reservada utilizada na criação do método (logo após o modificador de acesso) para defini-lo como "assíncrono".
 
+# Info de Desenvolvimento
+Objetivos
+
+- Utilizar uma abordagem de processamento assíncrono
+    - Permitindo múltiplas instâncias paralelamente
+
+## Ferramentas
+
+- Linguagem
+    - C#
+- Gerenciador de Tarefas
+    - Tasks.Run → Assync / Await
+- Interface Gráfica
+    - Windows Presentation Fundation
+
+## Implementações
+
+- [x]  Tela do servidor
+- [x]  Tela do cliente
+- [ ]  Tela de login
+    - Ser a primeira tela, e depois dela vem a tela de cliente
+- [ ]  Conexão TCP/IP
+- [ ]  Banco de dados Teste
+    - MongoDB
+- [ ]  Pra entrar na tela de servidor é necessário um login específico :
+    - Username → “Admin” / Password: (Senha específica)
+
+## Tratamento de Exceções
+
+- Client
+- [x]  Não enviar mensagens sem servidor
+- [x]  Não conectar em um servidor não iniciado
+- [x]  Não desconectar de um servidor não iniciado
+- [x]  Aviso de porta em uso
+  
+- Server
+    - [x]  Não conectar se tiver endereço incorreto
+    - [ ]  Não iniciar se já estiver iniciado no endereçoIP
+    - [x]  Não desconectar se não houver antes uma conexão
+
+## Bugs
+
+- [ ]  Aviso de “Porta em uso” ao clicar em ‘Desconectar’
 
 # Protótipos
 
