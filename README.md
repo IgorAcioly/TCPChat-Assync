@@ -12,19 +12,10 @@
     - Assync: Palavra reservada utilizada na criação do método (logo após o modificador de acesso) para defini-lo como "assíncrono".
 
 # Info de Desenvolvimento
-Objetivos
+## Objetivos
 
 - Utilizar uma abordagem de processamento assíncrono
     - Permitindo múltiplas instâncias paralelamente
-
-## Ferramentas
-
-- Linguagem
-    - C#
-- Gerenciador de Tarefas
-    - Tasks.Run → Assync / Await
-- Interface Gráfica
-    - Windows Presentation Fundation
 
 ## Implementações
 
