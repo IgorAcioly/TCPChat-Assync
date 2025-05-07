@@ -59,7 +59,7 @@ namespace TCPChat_Assync
                 }
                 else
                 {
-                    txtBox_StatusMensagem.AppendText("TESTE.\n");
+                    MessageBox.Show("O servidor já está aguardando o cliente.\n");
                 }
             }
 
