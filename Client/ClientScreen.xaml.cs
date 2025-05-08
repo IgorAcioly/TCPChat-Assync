@@ -142,6 +142,7 @@ namespace TCPChat_Assync
                 {
                     MessageBox.Show("Erro ao enviar mensagem."+"\n" + ex.Message);
                 }
-            } 
+            }
+   
     }
 }
