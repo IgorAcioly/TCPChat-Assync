@@ -11,24 +11,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using TCPChat_Assync.Cadastro;
 
-namespace TCPChat_Assync
+namespace TCPChat_Assync.Cadastro
 {
     /// <summary>
     /// Lógica interna para Window1.xaml
     /// </summary>
-    public partial class LoginScreen : Window
+    public partial class CadastroScreen : Window
     {
-        public LoginScreen()
+        public CadastroScreen()
         {
             InitializeComponent();
         }
 
-        private void btnCadastrar_Click(object sender, RoutedEventArgs e)
+        private void btnVoltar_Click(object sender, RoutedEventArgs e)
         {
-            CadastroScreen telaCadastro = new CadastroScreen();
-            telaCadastro.Show();
+            LoginScreen telaLogin = new LoginScreen();
+            telaLogin.Show();
             this.Close();
         }
     }
