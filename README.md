@@ -1,4 +1,4 @@
-# Ambiente de Desenvolvimento
+# Ambiente de Desenvolvimento 🌍
 - IDE
   - Visual Studio (Comunity 2022)
 - Linguagem
@@ -11,9 +11,9 @@
     - Await: Serve para esperar a conclusão de uma Tarefa sem travar a interface (UI).
     - Assync: Palavra reservada utilizada na criação do método (logo após o modificador de acesso) para defini-lo como "assíncrono".
 
-# Info de Desenvolvimento
-## Objetivos
+# Info de Desenvolvimento ⚒️
 
+## Objetivos
 - Utilizar uma abordagem de processamento assíncrono
     - Permitindo múltiplas instâncias paralelamente
 
@@ -21,13 +21,15 @@
 
 - [x]  Tela do servidor
 - [x]  Tela do cliente
-- [ ]  Tela de login
+- [x]  Tela de login
     - Ser a primeira tela, e depois dela vem a tela de cliente
-- [ ]  Conexão TCP/IP
-- [ ]  Banco de dados Teste
+- [x]  Conexão TCP/IP
+- [ ]  Acesso remoto á Banco de dados
     - MongoDB
+    - Armazenar dados de login
+    - Verificar cadastro de usuário / administrador 
 - [ ]  Pra entrar na tela de servidor é necessário um login específico :
-    - Username → “Admin” / Password: (Senha específica)
+    - Username → “adm” / Password: "adm123"
 
 ## Tratamento de Exceções
 
