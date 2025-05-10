@@ -12,7 +12,7 @@
             <ColumnDefinition Width="33*"/>
             <ColumnDefinition Width="127*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="btnEntrar" Content="Entrar" HorizontalAlignment="Left" Margin="294,294,0,0" VerticalAlignment="Top" Height="31" Width="90" Grid.Column="1"/>
+        <Button x:Name="btnEntrar" Content="Entrar" HorizontalAlignment="Left" Margin="294,294,0,0" VerticalAlignment="Top" Height="31" Width="90" Grid.Column="1" Click="btnEntrar_Click"/>
         <Button x:Name="btnCadastrar" Content="Cadastrar" HorizontalAlignment="Left" Margin="164,294,0,0" VerticalAlignment="Top" Height="31" Width="92" Grid.Column="1" Click="btnCadastrar_Click"/>
         <TextBox x:Name="txtBox_Usuario" HorizontalAlignment="Left" Margin="213,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="28" Grid.Column="1"/>
         <TextBox x:Name="txtBox_Senha" HorizontalAlignment="Left" Margin="213,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="26" Grid.Column="1"/>
