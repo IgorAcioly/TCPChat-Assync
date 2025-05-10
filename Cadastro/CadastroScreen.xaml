@@ -16,7 +16,7 @@
         <TextBox x:Name="txtBox_NomeUsuario" HorizontalAlignment="Left" Margin="400,207,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="158" Height="26"/>
         <Label Content="Senha:" HorizontalAlignment="Left" Margin="296,239,0,0" VerticalAlignment="Top" Height="26" Width="49"/>
         <TextBox x:Name="txtBox_Senha" HorizontalAlignment="Left" Margin="400,239,0,0" TextWrapping="Wrap" Text="&#xA;" VerticalAlignment="Top" Width="158"  Height="26"/>
-        <Button x:Name="btnConcluir" Content="Concluir" HorizontalAlignment="Left" Margin="439,325,0,0" VerticalAlignment="Top" Height="29" Width="80"/>
+        <Button x:Name="btnConcluir" Content="Concluir" HorizontalAlignment="Left" Margin="439,325,0,0" VerticalAlignment="Top" Height="29" Width="80" Click="btnConcluir_Click"/>
 
     </Grid>
 </Window>

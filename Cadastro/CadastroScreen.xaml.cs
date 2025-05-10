@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace TCPChat_Assync.Cadastro
 {
-    /// <summary>
-    /// Lógica interna para Window1.xaml
-    /// </summary>
+
     public partial class CadastroScreen : Window
     {
         public CadastroScreen()
@@ -29,6 +27,21 @@ namespace TCPChat_Assync.Cadastro
             LoginScreen telaLogin = new LoginScreen();
             telaLogin.Show();
             this.Close();
+        }
+
+        // Cadastra cliente no banco de dados
+        private void btnConcluir_Click(object sender, RoutedEventArgs e)
+        {
+            var mongo = new TCPChat_Assync.Repository.MongoDB();
+
+            string nomeCompleto = txtBox_NomeCompleto.Text;
+            string nomeUsuario = txtBox_NomeUsuario.Text;
+            string senha = txtBox_Senha.Text;
+
+            mongo.InsertClient(nomeCompleto, nomeUsuario, senha);
+
+            MessageBox.Show("Cadastro concluído com sucesso!");
+
         }
     }
 }
