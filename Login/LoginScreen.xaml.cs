@@ -38,15 +38,16 @@ namespace TCPChat_Assync
             var mongo = new TCPChat_Assync.Repository.MongoDB();
             string nomeUsuario = txtBox_Usuario.Text;
             string senha = txtBox_Senha.Text;
-            var usuario = mongo.LoginUser(nomeUsuario, senha);
+            var login = mongo.LoginUser(nomeUsuario, senha);
 
-            if (usuario is Admin admin)
+
+            if (login == "admin")
             {
                 ServerScreen telaServer = new ServerScreen();
                 telaServer.Show();
                 this.Close();
             }
-            else if (usuario is Client client)
+            else if (login == "user")
             {
                 ClientScreen telaClient = new ClientScreen();
                 telaClient.Show();
@@ -54,7 +55,7 @@ namespace TCPChat_Assync
             }
             else
             {
-                MessageBox.Show("Usuário não encontrado\n"+"Insira os dados informados corretamente ou realize cadastro");
+                MessageBox.Show("Usuário não encontrado\n" + "Insira os dados informados corretamente ou realize cadastro");
             }
         }
     }

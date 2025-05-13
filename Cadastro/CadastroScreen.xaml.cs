@@ -38,7 +38,7 @@ namespace TCPChat_Assync.Cadastro
             string nomeUsuario = txtBox_NomeUsuario.Text;
             string senha = txtBox_Senha.Text;
 
-            mongo.InsertClient(nomeCompleto, nomeUsuario, senha);
+            mongo.InsertUser(nomeCompleto, nomeUsuario, senha);
 
             MessageBox.Show("Cadastro concluído com sucesso!");
 

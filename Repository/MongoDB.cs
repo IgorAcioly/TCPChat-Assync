@@ -4,6 +4,7 @@ using System.Configuration.Internal;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
@@ -12,10 +13,10 @@ namespace TCPChat_Assync.Repository
 {
     public class MongoDB
     {
-        private readonly IMongoCollection<Client> client_collection;
-        private readonly IMongoCollection<Admin> admin_collection;
+        private readonly IMongoCollection<Climas> climas_collection;
+        private readonly IMongoCollection<Usuarios> usuarios_collection;
 
-        //Método estático que registra a conveção "CamelCase" para os nomes dos elementos
+       //Método estático que registra a conveção "CamelCase" para os nomes dos elementos
         static MongoDB()
         {
             var pack = new ConventionPack { new CamelCaseElementNameConvention() };
@@ -25,87 +26,87 @@ namespace TCPChat_Assync.Repository
         //Constutor que inicializa a conexão com o banco de dados
         public MongoDB()
         {
-            try
-            {
-                var uri = "mongodb+srv://igor:12345@clusteraps.iyptrun.mongodb.net/?retryWrites=true&w=majority&appName=ClusterAPS";
+                var uri = "mongodb+srv://admin:123@cluster0.vgm081o.mongodb.net/AppChatClima?authSource=admin&retryWrites=true&w=majority&appName=Cluster0";
                 var client = new MongoClient(uri);
-                var database = client.GetDatabase("ChatTCP");
-                client_collection = database.GetCollection<Client>("Client");
-                admin_collection = database.GetCollection<Admin>("Admin");
-            }
-            catch (Exception ex)
-            {
-                throw new MongoException("Não foi possível acessar o banco", ex);
-            }
+                var database = client.GetDatabase("AppChatClima");
+                climas_collection = database.GetCollection<Climas>("Climas");
+                usuarios_collection = database.GetCollection<Usuarios>("Usuarios");
         }
 
         //Método para inserir cliente no banco de dados
-        public void InsertClient(String nomeCompleto, String nomeUsuario, String senha)
+        public void InsertUser(String nomeCompleto, String nomeUsuario, String senha)
         {
-            var client = new Client
+            try
             {
-                NomeCompleto = nomeCompleto,
-                NomeUsuario = nomeUsuario,
-                Senha = senha
-            };
-
-            client_collection.InsertOne(client);
+                var user = new Usuarios
+                {
+                    fullname = nomeCompleto,
+                    username = nomeUsuario,
+                    password = senha,
+                    role = "user"
+                };
+                usuarios_collection.InsertOne(user);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Não foi possível cadastrar usuário\n" + "Tente novamente");
+            }
         }
     
-
-        public Object LoginUser(String nomeUsuario, String senha)
+        public String LoginUser(String nomeUsuario, String senha)
         {
-
+            //Remove espaços em branco
             nomeUsuario = nomeUsuario.Trim();
             senha = senha.Trim();
 
             //Cria filtro para busca de usuário no banco de dados
             try
             {
-                var filtroAdmin = Builders<Admin>.Filter.Eq(a => a.NomeUsuario, nomeUsuario) &
-                             Builders<Admin>.Filter.Eq(a => a.Senha, senha);
 
-                var admin = admin_collection.Find(filtroAdmin).FirstOrDefault();
+                var filtroUser = Builders<Usuarios>.Filter.Eq(a => a.username, nomeUsuario) &
+                             Builders<Usuarios>.Filter.Eq(a => a.password, senha);
 
-                if (admin != null)
+                var user = usuarios_collection.Find(filtroUser).FirstOrDefault();
+
+                if (user == null)
                 {
-                    return admin;
+                    MessageBox.Show("Usuário não encontrado");
                 }
-
-                var filtroClient = Builders<Client>.Filter.Eq(a => a.NomeUsuario, nomeUsuario) &
-                             Builders<Client>.Filter.Eq(a => a.Senha, senha);
-
-                var client = client_collection.Find(filtroClient).FirstOrDefault();
-
-                if (client != null)
+                else if (user.role == "admin")
                 {
-                    return client;
+                    return "admin";
                 }
-
+                else
+                {
+                    return "user";
+                }
             }
             catch (Exception ex)
             { 
-                throw new MongoException("Erro ao autenticar usuário", ex);
-
+                MessageBox.Show("Erro ao autenticar usuário\n" + ex.Message);
             }
-
             return null; //Retona nulo caso nenhum usuário seja encontrado
         }
     }
 
     //Classes que representam as propriedades das coleções (Client e Admin) no banco de dados
-    public class Client
+    public class Usuarios
     {
-        public ObjectId Id { get; set; }
-        public String NomeCompleto { get; set; }
-        public String NomeUsuario { get; set; }
-        public String Senha { get; set; }
+        public ObjectId id { get; set; }
+        public String username { get; set; }
+        public String fullname { get; set; }
+        public String password { get; set; }
+        public String role { get; set; }
     }
-    public class Admin
-    {
-        public ObjectId Id { get; set; }
-        public String NomeUsuario { get; set; }
-        public String Senha { get; set; }
-    }
-}
 
+    public class Climas
+    {
+        public ObjectId Id { get; set; }
+        public String Pais { get; set; }
+        public String Cidade { get; set; }
+        public Double Temperatura { get; set; }
+        public Double ChuvaMM { get; set; }
+        public Boolean RiscoEnchente { get; set; }
+    }
+
+}
