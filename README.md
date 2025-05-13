@@ -28,7 +28,7 @@
     - MongoDB
     - Armazenar dados de login
     - Verificar cadastro de usuário / administrador 
-- [ ]  Pra entrar na tela de servidor é necessário um login específico :
+- [X]  Pra entrar na tela de servidor é necessário um login específico :
     - Username → “adm” / Password: "adm123"
 
 ## Tratamento de Exceções
@@ -47,6 +47,7 @@
 ## Bugs
 
 - [ ]  Aviso de “Porta em uso” ao clicar em ‘Desconectar’
+- [ ]  Processo de login não reconhece um cliente já cadastrado no banco remoto
 
 # Protótipos
 
