@@ -87,6 +87,8 @@ namespace TCPChat_Assync
 
         private async Task ReceberMensagensAsync()
         {
+            try
+            {
                 while (true)
                 {
                     string mensagem = await STR.ReadLineAsync();
@@ -98,6 +100,21 @@ namespace TCPChat_Assync
                         txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
                     });
                 }
+            }
+            catch { }
+            finally
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    txtBox_StatusMensagem.AppendText("Conexão com o servidor foi encerrada.\n");
+                });
+
+
+                STR?.Close();
+                STW?.Close();
+                client?.Close();
+                client = null; 
+            }
         }
 
         private void btnEnviar_Click(object sender, RoutedEventArgs e)

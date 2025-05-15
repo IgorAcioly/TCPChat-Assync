@@ -70,10 +70,6 @@ namespace TCPChat_Assync
             {
                 if (listener != null)
                 {
-                    EnviarParaTodos("Todos os clientes foram desconectados.\n" + "Servidor parado.");
-
-                    await Task.Delay(100);
-
                     listener.Stop();
                     listener = null;
 
@@ -83,6 +79,7 @@ namespace TCPChat_Assync
                         {
                             try
                             {
+                                cliente.GetStream().Close();
                                 cliente.Close();
                             }
                             catch { }
@@ -90,7 +87,7 @@ namespace TCPChat_Assync
                         clientesConectados.Clear();
                     }
 
-                    txtBox_StatusMensagem.AppendText("Todos os clientes foram desconectados.\n" + "Servidor parado.\n");
+                    txtBox_StatusMensagem.AppendText("Servidor desconectado.\n");
 
                     await Task.Delay(500); // Garante liberação da porta
                 }
