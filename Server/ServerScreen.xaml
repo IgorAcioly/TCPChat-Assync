@@ -16,7 +16,7 @@
         <TextBox x:Name="txtBox_IPServer" HorizontalAlignment="Left" Margin="171,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="28"/>
         <Label x:Name="txtPortServer" Content="Port Server" HorizontalAlignment="Left" Margin="84,160,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtBox_PortServer" HorizontalAlignment="Left" Margin="171,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71" Height="28"/>
-        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="83,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="83,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" IsReadOnly="True" />
         <Button x:Name="btnConectar" Content="Conectar" HorizontalAlignment="Left" Margin="120,243,0,0" VerticalAlignment="Top" Height="32" Width="63" Click="btnConectar_Click"/>
         <Button x:Name="btnDesconectar" Content="Desconectar" HorizontalAlignment="Left" Margin="206,243,0,0" VerticalAlignment="Top" Height="32" Width="71" Click="btnDesconectar_Click"/>
 

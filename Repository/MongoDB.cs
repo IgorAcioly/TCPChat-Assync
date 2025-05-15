@@ -76,7 +76,7 @@ namespace TCPChat_Assync.Repository
                 {
                     return "admin";
                 }
-                else
+                else if (user.role == "user")
                 {
                     return "user";
                 }

@@ -19,7 +19,7 @@
         <TextBox x:Name="txtBox_PortServer" HorizontalAlignment="Left" Margin="67,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="71" Height="28" Grid.Column="1"/>
         <Label x:Name="txtDigiteMensagem" Content="Digite a mensagem:" HorizontalAlignment="Left" Margin="28,189,0,0" VerticalAlignment="Top" Cursor="" Grid.ColumnSpan="2"/>
         <TextBox x:Name="txtBox_Mensagem" HorizontalAlignment="Left" Margin="103,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" Height="180" Grid.Column="1" AcceptsReturn="True" VerticalScrollBarVisibility="Visible"/>
-        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="382,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+        <TextBox x:Name="txtBox_StatusMensagem" HorizontalAlignment="Left" Margin="382,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="343" Height="310" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
         <Button x:Name="btnConectar" Content="Conectar" HorizontalAlignment="Left" Margin="6,108,0,0" VerticalAlignment="Top" Height="32" Width="62" Click="btnConectar_Click" Grid.Column="1"/>
         <Button x:Name="btnDesconectar" Content="Desconectar" HorizontalAlignment="Left" Margin="92,108,0,0" VerticalAlignment="Top" Height="32" Width="70" Click="btnDesconectar_Click" Grid.Column="1"/>
         <Button x:Name="btnEnviar" Content="Enviar" HorizontalAlignment="Left" Margin="283,366,0,0" VerticalAlignment="Top" Height="28" Width="52" Click="btnEnviar_Click" Grid.Column="1"/>

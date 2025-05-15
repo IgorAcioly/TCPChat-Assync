@@ -22,12 +22,11 @@ namespace TCPChat_Assync
 
     public partial class ClientScreen : Window
     {
-        private TcpClient client = new TcpClient();
+        private TcpClient client;
         public StreamReader STR;
         public StreamWriter STW;
         public string recieve;
         public string TextToSend;
-        private CancellationTokenSource cts;
 
         public ClientScreen()
         {
@@ -38,22 +37,27 @@ namespace TCPChat_Assync
         {
             try
             {
+                if (client != null && client.Connected)
+                {
+                    MessageBox.Show("Seu cliente já está conectado.");
+                    return;
+                }
                 IPEndPoint IpEnd = new IPEndPoint(IPAddress.Parse(txtBox_IPServer.Text), int.Parse(txtBox_PortServer.Text));
-                txtBox_StatusMensagem.AppendText("Conectado ao servidor" + "\n");
+                    txtBox_StatusMensagem.AppendText("Tentando conectar ao servidor..." + "\n");
 
-                await client.ConnectAsync(IpEnd.Address, IpEnd.Port);
+                    client = new TcpClient();
+                    await client.ConnectAsync(IpEnd.Address, IpEnd.Port);
 
-                STR = new StreamReader(client.GetStream());
-                STW = new StreamWriter(client.GetStream());
-                STW.AutoFlush = true;
+                    STR = new StreamReader(client.GetStream());
+                    STW = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
-                cts = new CancellationTokenSource();
-                _ = Task.Run(() => ReceberMensagensAsync(cts.Token));
+                    txtBox_StatusMensagem.AppendText("Conectado" + "\n");
+
+                    _ = Task.Run(() => ReceberMensagensAsync());
             }
-
             catch (Exception)
             {
-                MessageBox.Show("Não foi possível conectar-se." + "\n"+"Nenhum servidor encontrado com o endereço especificado");
+                MessageBox.Show("Não foi possível conectar-se." + "\n" + "Nenhum servidor encontrado com o endereço especificado");
             }
         }
 
@@ -68,8 +72,6 @@ namespace TCPChat_Assync
                 }
                 else
                 {
-                    cts?.Cancel();
-
                     STR?.Close();
                     STW?.Close();
                     client?.Close();
@@ -83,32 +85,19 @@ namespace TCPChat_Assync
             }
         }
 
-        private async Task ReceberMensagensAsync(CancellationToken token)
+        private async Task ReceberMensagensAsync()
         {
-            try
-            {
-                while (!token.IsCancellationRequested)
+                while (true)
                 {
                     string mensagem = await STR.ReadLineAsync();
 
-                    if (mensagem != null)
+                    if (mensagem == null) break;
+
+                    Dispatcher.Invoke(() => //Atualiza a UI
                     {
-                        Dispatcher.Invoke(() => //Atualiza a UI
-                        {
-                            txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
-                        });
-                    }
-
+                        txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
+                    });
                 }
-            }
-            catch (Exception ex)
-            {
-                Dispatcher.Invoke(() =>
-                {
-                    txtBox_Mensagem.AppendText("Erro ao receber mensagem." + ex.Message);
-                });
-            }
-
         }
 
         private void btnEnviar_Click(object sender, RoutedEventArgs e)
@@ -127,10 +116,8 @@ namespace TCPChat_Assync
 
             try
                 {
-
                     TextToSend = txtBox_Mensagem.Text;
                     STW.WriteLine(TextToSend);
-                    txtBox_StatusMensagem.AppendText("Host:" + TextToSend + "\n");
                     txtBox_Mensagem.Clear();
                 }
                 catch (NullReferenceException ex)

@@ -23,10 +23,7 @@ namespace TCPChat_Assync
     public partial class ServerScreen : Window
     {
         private TcpListener listener;
-        private TcpClient client = new TcpClient();
-        public StreamReader STR;
-        public StreamWriter STW;
-        private CancellationTokenSource cts;
+        private List<TcpClient> clientesConectados = new List<TcpClient>();
 
         public ServerScreen()
         {
@@ -37,35 +34,29 @@ namespace TCPChat_Assync
         {
             try
             {
-                if (listener == null)
+                if (listener == null && clientesConectados != null)
                 {
                     int porta = int.Parse(txtBox_PortServer.Text);
                     listener = new TcpListener(IPAddress.Any, porta);
+
                     // Garante que a porta possa ser reutilizada após uma desconexão
                     listener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                     listener.Start();
 
                     txtBox_StatusMensagem.AppendText("Servidor aguardando conexão com cliente.\n");
-                    client = await listener.AcceptTcpClientAsync();
 
-                    STR = new StreamReader(client.GetStream());
-                    STW = new StreamWriter(client.GetStream());
-                    STW.AutoFlush = true;
-                    cts = new CancellationTokenSource();
-                    _ = Task.Run(() => ReceberMensagensAsync(cts.Token));
-
-                    txtBox_StatusMensagem.AppendText("Servidor iniciado e cliente conectado.\n");
+                    _ = Task.Run(() => AguardarClientesAssync());
 
                 }
                 else
                 {
-                    MessageBox.Show("O servidor já está aguardando o cliente.\n");
+                    MessageBox.Show("O servidor já está em execução.\n");
                 }
             }
 
             catch (SocketException)
             {
-                MessageBox.Show("A porta selecionada já está em uso.");
+                MessageBox.Show("A porta selecionada já está em uso.\n");
             }
             catch (Exception)
             {
@@ -77,60 +68,111 @@ namespace TCPChat_Assync
         {
             try
             {
-                if (client != null || listener != null)
+                if (listener != null)
                 {
-                    cts?.Cancel();
-                    STR?.Close();
-                    STW?.Close();
-                    client?.Close();
-                    client = null;
+                    EnviarParaTodos("Todos os clientes foram desconectados.\n" + "Servidor parado.");
 
-                    txtBox_StatusMensagem.AppendText("Cliente desconectado.\n");
+                    await Task.Delay(100);
 
-                    listener?.Stop();
+                    listener.Stop();
                     listener = null;
-                    txtBox_StatusMensagem.AppendText("Servidor parado.\n");
+
+                    lock (clientesConectados)
+                    {
+                        foreach (var cliente in clientesConectados)
+                        {
+                            try
+                            {
+                                cliente.Close();
+                            }
+                            catch { }
+                        }
+                        clientesConectados.Clear();
+                    }
+
+                    txtBox_StatusMensagem.AppendText("Todos os clientes foram desconectados.\n" + "Servidor parado.\n");
 
                     await Task.Delay(500); // Garante liberação da porta
                 }
                 else 
                 {
-                    MessageBox.Show("Não há conexões estabelecidas.\n");
-
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Erro ao parar o servidor: ");
-            }
-        }
-
-        private async Task ReceberMensagensAsync(CancellationToken token)
-        {
-            try
-            {
-                while (!token.IsCancellationRequested)
-                {
-                    string mensagem = await STR.ReadLineAsync();
-
-                    if (mensagem != null)
-                    {
-                        Dispatcher.Invoke(() => //Atualiza a UI
-                        {
-                            txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
-                        });
-                    }
-
+                    MessageBox.Show("Servidor não está ativo.\n");
                 }
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Erro ao parar o servidor"+ex);
+            }
+        }
+
+        private async Task ReceberMensagensAsync(TcpClient cliente)
+        {
+            try
+            {
+                using var reader = new StreamReader(cliente.GetStream());
+                while (true)
+                {
+                    string mensagem = await reader.ReadLineAsync();
+
+                     if (mensagem == null) break;
+
+                    Dispatcher.Invoke(() => //Atualiza a UI
+                    {
+                        txtBox_StatusMensagem.AppendText("Guest: " + mensagem + "\n");
+                    });
+
+                    EnviarParaTodos(mensagem);
+                }
+            }
+            catch { }
+
+            finally
+            {
+                lock (clientesConectados)
+                {
+                    clientesConectados.Remove(cliente);
+                }
+                cliente.Close();
                 Dispatcher.Invoke(() =>
                 {
-                    txtBox_StatusMensagem.AppendText("Erro ao receber mensagem." + ex.Message);
+                    txtBox_StatusMensagem.AppendText("Cliente desconectado. \n");
                 });
             }
+        }
 
+        private async Task AguardarClientesAssync() 
+        {
+            while (true)
+            {
+                TcpClient novoCliente = await listener.AcceptTcpClientAsync();
+                lock (clientesConectados)
+                { 
+                    clientesConectados.Add(novoCliente);
+                }
+                Dispatcher.Invoke(() =>
+                {
+                    txtBox_StatusMensagem.AppendText("Cliente conectado.\n");
+                });
+
+                _ = Task.Run(() => ReceberMensagensAsync(novoCliente));
+                }            
+            }
+
+        private void EnviarParaTodos(string mensagem) 
+        {
+            lock (clientesConectados)
+            {
+                foreach (var cliente in clientesConectados)
+                {
+                    try
+                    {
+                        var writer = new StreamWriter(cliente.GetStream()) { AutoFlush = true };
+                        writer.WriteLine(mensagem);
+                    }
+                    catch { }
+                }
+            
+            }
         }
     }
 }
